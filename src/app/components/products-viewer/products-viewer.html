@@ -1,0 +1,71 @@
+<h1>Total cost of products in cart: {{ totalValue | number: '1.0-3' }}</h1>
+<div class="controls">
+  <div class="control-group">
+    <span class="label">Category:</span>
+    <select name="category" id="category" [(ngModel)]="category" (change)="filterProducts()">
+      <option value="all">All</option>
+      @for (cat of categories; track $index) {
+        <option [value]="cat">{{ cat }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="control-group">
+    <span class="label">Search:</span>
+    <input
+      type="text"
+      placeholder="Search products..."
+      [(ngModel)]="searchQuery"
+      (input)="filterProducts()"
+    />
+  </div>
+
+  <div class="control-group">
+    <span class="label">Price Limit:</span>
+    <div class="price-range-slider">
+      <p class="current-price">{{ priceRange | number: '1.0-3' }}$</p>
+      <div class="control-container">
+        <span class="min-price">{{ priceRangeMin | number: '1.0-3' }}$</span>
+        <input
+          type="range"
+          [min]="priceRangeMin"
+          [max]="priceRangeMax"
+          step="1"
+          [(ngModel)]="priceRange"
+          (input)="filterProducts()"
+        />
+        <span class="max-price">{{ priceRangeMax | number: '1.0-3' }}$</span>
+      </div>
+    </div>
+  </div>
+  <div class="control-group">
+    <span class="label">Sort by:</span>
+    <div class="sort-controls">
+      <select #sortSelect name="sortBy" id="sortBy" (change)="sortBy(sortSelect.value)">
+        <option value="default">Default</option>
+        <option value="price">Price</option>
+        <option value="name">Name</option>
+        <option value="rating">Rating</option>
+        <option value="stock">Stock</option>
+        <option value="discount">Discount</option>
+      </select>
+
+      <input
+        type="checkbox"
+        name="asc"
+        id="asc"
+        [(ngModel)]="asc"
+        (change)="sortBy(sortSelect.value)"
+      />
+    </div>
+  </div>
+  <div class="products-container">
+    @for (product of currProducts; track $index) {
+      <app-product-card
+        [product]="product"
+        [totalValue]="totalValue"
+        (buy)="updateTotalValue($event)"
+      ></app-product-card>
+    }
+  </div>
+</div>

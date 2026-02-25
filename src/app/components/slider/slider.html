@@ -1,0 +1,13 @@
+<div class="container">
+  <div id="slider-body">
+    <div id="slides" [style.transform]="'translateX(' + -currentIndex * 100 + '%)'">
+      @for (item of items; track item.id) {
+        <div class="slide">
+          <img [src]="item.images[0]" alt="{{ item.title }}" />
+        </div>
+      }
+    </div>
+    <button class="prev" (click)="prev()">prev</button>
+    <button class="next" (click)="next()">next</button>
+  </div>
+</div>

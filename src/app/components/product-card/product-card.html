@@ -1,0 +1,27 @@
+<div class="container" appShadow>
+  <div class="image-container">
+    <img src="{{ product.thumbnail }}" alt="product image" appZoomImage />
+  </div>
+  <div class="info-container">
+    <h3 class="title">{{ product.title }}</h3>
+    <p class="description" (click)="toggleDescription()">
+      {{ isExpanded ? product.description : (product.description | shorten) }}
+    </p>
+    <div class="numbers-container">
+      <p class="price">{{ product.price }}</p>
+      <p class="stock" [ngStyle]="{ color: product.stock > 0 ? 'green' : 'red' }">
+        @if (product.stock > 0) {
+          {{ product.stock }} remaining
+        } @else {
+          out of stock
+        }
+      </p>
+    </div>
+    <app-buy-button
+      (buttonClicked)="buyProduct()"
+      [buttonText]="'Buy'"
+      [buttonColor]="'green'"
+      [buttonFunctionality]="functionality"
+    ></app-buy-button>
+  </div>
+</div>

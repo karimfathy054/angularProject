@@ -1,0 +1,223 @@
+:host {
+  display: block;
+  padding: 2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: #0f172a;
+  font-size: 1.875rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.025em;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.5rem;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  margin-bottom: 3rem;
+  border: 1px solid #f1f5f9;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: flex-start;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-left: 0.25rem;
+}
+
+.controls select,
+.controls input[type="text"] {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background-color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 220px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.controls select:focus,
+.controls input[type="text"]:focus {
+  outline: none;
+  border-color: #3bf6b5;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+.price-range-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 280px;
+  background: #f8fafc;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+.current-price {
+  font-weight: 700;
+  color: #3bf6b5;
+  margin: 0;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.current-price::before {
+  content: 'Max Price: ';
+  color: #64748b;
+  font-weight: 500;
+}
+
+.control-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.min-price, .max-price {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+input[type="range"] {
+  flex-grow: 1;
+  height: 4px;
+  background: #cbd5e1;
+  border-radius: 2px;
+  appearance: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: #3bf6b5;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .products-container {
+    grid-template-columns: 1fr;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls select,
+  .controls input[type="text"],
+  .price-range-slider {
+    min-width: 0;
+  }
+}
+
+/* Sort controls container */
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Custom Arrow Checkbox */
+#asc {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  cursor: pointer;
+  background-color: #f8fafc;
+  border-radius: 0.75rem;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e2e8f0;
+  position: relative;
+  margin: 0;
+}
+
+#asc::before {
+  content: '↓';
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+#asc:checked {
+  background-color: #3bf6b5;
+  border-color: #3bf6b5;
+  box-shadow: 0 4px 12px rgba(59, 246, 181, 0.25);
+}
+
+#asc:checked::before {
+  content: '↑';
+  color: white;
+  transform: scale(1.1);
+}
+
+#asc:hover {
+  border-color: #3bf6b5;
+  background-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+#asc:checked:hover {
+  background-color: #2ed199;
+  transform: translateY(-1px);
+}
+
+#asc:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59, 246, 181, 0.15);
+}
