@@ -48,3 +48,30 @@
 .stock{
     font-weight: bold;
 }
+
+.details-button{
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;    
+}
+
+.details-button:hover{
+    text-decoration: underline;
+    color: #000;
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+app-buy-button{
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 8px;
+}
+    

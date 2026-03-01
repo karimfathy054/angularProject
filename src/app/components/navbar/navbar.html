@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <span class="navbar-brand">MyStore.com</span>
+  <a routerLink="home" class="navbar-button" routerLinkActive="active-tab">home</a>
+  <a routerLink="/products" class="navbar-button" routerLinkActive="active-tab">products</a>
+  <a routerLink="/add-product" class="navbar-button" routerLinkActive="active-tab">add product</a>
+  <a routerLink="/edit-product" class="navbar-button" routerLinkActive="active-tab">edit product</a>
+  <a routerLink="/delete-product" class="navbar-button" routerLinkActive="active-tab"
+    >delete product</a
+  >
+  <div class="auth-group">
+    @if (!isLoggedIn()) {
+      <a routerLink="/login" class="navbar-button" routerLinkActive="active-tab">login</a>
+      <a routerLink="/register" class="navbar-button" routerLinkActive="active-tab">register</a>
+    } @else {
+      <span>Hi {{ getUserName() }}!</span>
+      <a routerLink="/" class="navbar-button" routerLinkActive="active-tab">logout</a>
+    }
+  </div>
+</nav>

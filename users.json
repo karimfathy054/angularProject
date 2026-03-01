@@ -1,0 +1,84 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "firstName": "karim",
+            "lastName": "Fathy",
+            "email": "karim.fathy@system.com",
+            "password": "password123",
+            "role": "admin"
+        },
+        {
+            "id": 2,
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "email": "jane.smith@example.com",
+            "password": "password456",
+            "role": "user"
+        },
+        {
+            "id": 3,
+            "firstName": "Michael",
+            "lastName": "Brown",
+            "email": "michael.brown@example.com",
+            "password": "password789",
+            "role": "user"
+        },
+        {
+            "id": 4,
+            "firstName": "Emily",
+            "lastName": "Davis",
+            "email": "emily.davis@example.com",
+            "password": "passwordabc",
+            "role": "editor"
+        },
+        {
+            "id": 5,
+            "firstName": "Chris",
+            "lastName": "Wilson",
+            "email": "chris.wilson@example.com",
+            "password": "passworddef",
+            "role": "user"
+        },
+        {
+            "id": 6,
+            "firstName": "Sarah",
+            "lastName": "Miller",
+            "email": "sarah.miller@example.com",
+            "password": "passwordghi",
+            "role": "admin"
+        },
+        {
+            "id": 7,
+            "firstName": "David",
+            "lastName": "Taylor",
+            "email": "david.taylor@example.com",
+            "password": "passwordjkl",
+            "role": "user"
+        },
+        {
+            "id": 8,
+            "firstName": "Linda",
+            "lastName": "Anderson",
+            "email": "linda.anderson@example.com",
+            "password": "passwordmno",
+            "role": "moderator"
+        },
+        {
+            "id": 9,
+            "firstName": "James",
+            "lastName": "Thomas",
+            "email": "james.thomas@example.com",
+            "password": "passwordpqr",
+            "role": "user"
+        },
+        {
+            "id": 10,
+            "firstName": "Patricia",
+            "lastName": "Jackson",
+            "email": "patricia.jackson@example.com",
+            "password": "passwordstu",
+            "role": "user"
+        }
+    ]
+}

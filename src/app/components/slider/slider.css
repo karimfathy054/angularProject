@@ -1,11 +1,11 @@
 .container{
+}
+#slider-body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-#slider-body {
   position: relative;
-  width: 600px;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 button.prev,
@@ -40,12 +40,35 @@ button.next {
   padding: 10px 15px;
   cursor: pointer;
   font-size: 20px;
+  height: 100%;
+  width: 10%;
 }
 
 button.prev {
-  left: 10px;
+  left: 0px;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.5), rgba(0,0,0,0));
 }
 
 button.next {
-  right: 10px;
+  right: 0px;
+  background: linear-gradient(to bottom left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #333;
 }

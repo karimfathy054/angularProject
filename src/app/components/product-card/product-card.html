@@ -17,11 +17,34 @@
         }
       </p>
     </div>
-    <app-buy-button
-      (buttonClicked)="buyProduct()"
-      [buttonText]="'Buy'"
-      [buttonColor]="'green'"
-      [buttonFunctionality]="functionality"
-    ></app-buy-button>
+    <div class="buttons-container">
+      <a class="details-button" [routerLink]="['/products', product.id]">details</a>
+      @switch (renderFor) {
+        @case ('view') {
+          <app-buy-button
+            (buttonClicked)="buyProduct()"
+            [buttonText]="'Buy'"
+            [buttonColor]="'green'"
+            [isActive]="product.stock > 0"
+          ></app-buy-button>
+        }
+        @case ('edit') {
+          <app-buy-button
+            (buttonClicked)="updateProduct()"
+            [buttonText]="'Edit'"
+            [buttonColor]="'blue'"
+            [isActive]="true"
+          ></app-buy-button>
+        }
+        @case ('delete') {
+          <app-buy-button
+            (buttonClicked)="deleteProduct()"
+            [buttonText]="'Delete'"
+            [buttonColor]="'red'"
+            [isActive]="true"
+          ></app-buy-button>
+        }
+      }
+    </div>
   </div>
 </div>

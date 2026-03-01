@@ -1,0 +1,64 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="login-title">Welcome Back</h2>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="login-form">
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email address</label>
+        <div class="input-wrapper">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            ngModel
+            required
+            email
+            placeholder="name@example.com"
+            #emailInput="ngModel"
+          />
+        </div>
+
+        <!-- Validation Error for Email -->
+        @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+          <div class="error-message">Please enter a valid email.</div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-input"
+            ngModel
+            required
+            minlength="6"
+            placeholder="Enter your password"
+            #passwordInput="ngModel"
+          />
+        </div>
+
+        <!-- Validation Error for Password -->
+        @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
+          <div class="error-message">Password must be at least 6 characters long.</div>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" [disabled]="loginForm.invalid">Login</button>
+    </form>
+
+    <!-- Registration Link -->
+    <div class="register-section">
+      <p class="register-text">
+        Don't have an account?
+        <a routerLink="/register" class="register-link">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>

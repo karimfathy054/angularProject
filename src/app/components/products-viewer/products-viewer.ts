@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductCard } from '../product-card/product-card';
-import { products, categories } from '../../db';
+import { categories } from '../../db';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
+import { StaticData } from '../../services/static-data';
+import { IProduct } from '../../models/iproduct';
 
 @Component({
   selector: 'app-products-viewer',
@@ -11,22 +13,32 @@ import { DecimalPipe } from '@angular/common';
   styleUrl: './products-viewer.css',
 })
 export class ProductsViewer {
-  private readonly allProducts = products;
-  currProducts = [...products];
+  buttonFunctionality = () => {};
+  allProducts: IProduct[] = [];
   categories: string[] = categories;
   totalValue: number = 0;
   searchQuery: string = '';
   readonly priceRangeMin: number;
   readonly priceRangeMax: number;
+  private readonly pageSize: number = 30;
+  private pageNumber: number = 0;
   priceRange: number;
   category: string = 'all';
   asc: boolean = true;
+  @Input() renderFor: 'view' | 'edit' | 'delete' = 'view';
 
-  constructor() {
-    this.priceRangeMax = Math.max(...products.map((product) => product.price));
-    this.priceRangeMin = Math.min(...products.map((product) => product.price));
-
+  constructor(private staticDataService: StaticData) {
+    const { max, min } = this.staticDataService.getProductsPriceRange();
+    this.priceRangeMax = max;
+    this.priceRangeMin = min;
     this.priceRange = this.priceRangeMax;
+  }
+
+  ngOnInit() {
+    this.allProducts = this.staticDataService.getProducts(
+      this.pageSize,
+      this.pageNumber * this.pageSize,
+    );
   }
 
   updateTotalValue(value: unknown) {
@@ -34,30 +46,35 @@ export class ProductsViewer {
   }
 
   filterProducts() {
-    this.currProducts = this.allProducts
-      .filter((product) => product.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
-      .filter((product) => product.price <= this.priceRange)
-      .filter((product) => this.category === 'all' || product.category === this.category);
+    this.allProducts = this.staticDataService.getProductsFiltered(
+      this.pageSize,
+      this.pageNumber * this.pageSize,
+      this.searchQuery,
+      this.category,
+      this.priceRange,
+    );
   }
   sortBy(sortBy: string) {
     switch (sortBy) {
       case 'price':
-        this.currProducts.sort((a, b) => (this.asc ? a.price - b.price : b.price - a.price));
+        this.allProducts.sort((a, b) => (this.asc ? a.price - b.price : b.price - a.price));
         break;
       case 'name':
-        this.currProducts.sort((a, b) =>
+        this.allProducts.sort((a, b) =>
           this.asc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title),
         );
         break;
       case 'rating':
-        this.currProducts.sort((a, b) => (this.asc ? a.rating - b.rating : b.rating - a.rating));
+        this.allProducts.sort((a, b) => (this.asc ? a.rating - b.rating : b.rating - a.rating));
         break;
       case 'stock':
-        this.currProducts.sort((a, b) => (this.asc ? a.stock - b.stock : b.stock - a.stock));
+        this.allProducts.sort((a, b) => (this.asc ? a.stock - b.stock : b.stock - a.stock));
         break;
       case 'discount':
-        this.currProducts.sort((a, b) =>
-          this.asc ? a.discount - b.discount : b.discount - a.discount,
+        this.allProducts.sort((a, b) =>
+          this.asc
+            ? a.discountPercentage - b.discountPercentage
+            : b.discountPercentage - a.discountPercentage,
         );
         break;
       case 'default':

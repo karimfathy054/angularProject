@@ -1,0 +1,179 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-body">
+      <form #productForm="ngForm" (ngSubmit)="onSubmit()">
+        <!-- Product Title -->
+        <div class="form-group">
+          <label for="title" class="input-label">Product Title</label>
+          <input
+            type="text"
+            class="input-field"
+            id="title"
+            name="title"
+            [(ngModel)]="product.title"
+            required
+            #title="ngModel"
+            placeholder="Enter product name"
+            value="{{ product.title }}"
+          />
+          @if (title.invalid && title.touched) {
+            <div class="error-message">Title is required</div>
+          }
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description" class="input-label">Description</label>
+          <textarea
+            class="input-field"
+            id="description"
+            name="description"
+            rows="4"
+            [(ngModel)]="product.description"
+            value="{{ product.description }}"
+            required
+            #desc="ngModel"
+            placeholder="Describe the product features..."
+          ></textarea>
+          @if (desc.invalid && desc.touched) {
+            <div class="error-message">Description is required</div>
+          }
+        </div>
+
+        <div class="form-row">
+          <!-- Category Dropdown -->
+          <div class="form-column">
+            <label for="category" class="input-label">Category</label>
+            <select
+              class="input-field select-field"
+              id="category"
+              name="category"
+              [(ngModel)]="product.category"
+              required
+              #cat="ngModel"
+            >
+              <option value="" disabled selected>Select a category</option>
+              @for (category of categories; track category) {
+                <option [value]="category">
+                  {{ category | titlecase }}
+                </option>
+              }
+            </select>
+            @if (cat.invalid && cat.touched) {
+              <div class="error-message">Category is required</div>
+            }
+          </div>
+
+          <!-- Brand -->
+          <div class="form-column">
+            <label for="brand" class="input-label">Brand</label>
+            <input
+              type="text"
+              class="input-field"
+              id="brand"
+              name="brand"
+              [(ngModel)]="product.brand"
+              value="{{ product.brand }}"
+              required
+              #brand="ngModel"
+              placeholder="e.g. Apple, Nike"
+            />
+            @if (brand.invalid && brand.touched) {
+              <div class="error-message">Brand is required</div>
+            }
+          </div>
+        </div>
+
+        <div class="form-row triple">
+          <!-- Price -->
+          <div class="form-column">
+            <label for="price" class="input-label">Price ($)</label>
+            <div class="input-group">
+              <span class="input-addon">$</span>
+              <input
+                type="number"
+                inputmode="numeric"
+                class="input-field"
+                id="price"
+                name="price"
+                [(ngModel)]="product.price"
+                value="{{ product.price }}"
+                required
+                min="0"
+                #price="ngModel"
+                placeholder="0.00"
+              />
+            </div>
+            @if (price.invalid && price.touched) {
+              @if (price.errors?.['required']) {
+                <div class="error-message">Price is required</div>
+              }
+              @if (price.errors?.['min']) {
+                <div class="error-message">Price must be greater than 0</div>
+              }
+            }
+          </div>
+          <!-- Discount -->
+          <div class="form-column">
+            <label for="discount" class="input-label">Discount (%)</label>
+            <div class="input-group">
+              <input
+                type="number"
+                inputmode="numeric"
+                class="input-field"
+                id="discount"
+                name="discountPercentage"
+                [(ngModel)]="product.discountPercentage"
+                value="{{ product.discountPercentage }}"
+                min="0"
+                max="100"
+                #discount="ngModel"
+                placeholder="0"
+              />
+              @if (discount.invalid) {
+                <div class="error-message">Discount value is invalid</div>
+              }
+              <span class="input-addon">%</span>
+            </div>
+          </div>
+          <!-- Stock -->
+          <div class="form-column">
+            <label for="stock" class="input-label">Stock Quantity</label>
+            <input
+              type="number"
+              class="input-field"
+              inputmode="numeric"
+              id="stock"
+              name="stock"
+              [(ngModel)]="product.stock"
+              value="{{ product.stock }}"
+              required
+              min="1"
+              placeholder="Available units"
+              #stock="ngModel"
+            />
+            @if (stock.invalid && stock.touched) {
+              @if (stock.errors?.['required']) {
+                <div class="error-message">Stock is required</div>
+              }
+              @if (stock.errors?.['min']) {
+                <div class="error-message">Stock must be greater than 0</div>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-footer">
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="productForm.invalid || productForm.pristine"
+          >
+            Update Product
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

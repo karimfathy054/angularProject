@@ -60,11 +60,12 @@
     </div>
   </div>
   <div class="products-container">
-    @for (product of currProducts; track $index) {
+    @for (product of allProducts; track $index) {
       <app-product-card
         [product]="product"
         [totalValue]="totalValue"
         (buy)="updateTotalValue($event)"
+        [renderFor]="renderFor"
       ></app-product-card>
     }
   </div>

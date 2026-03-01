@@ -3,6 +3,7 @@
     class="buy-button"
     [ngStyle]="{ 'background-color': buttonColor }"
     (click)="handleClick()"
+    [disabled]="!isActive"
   >
     {{ buttonText }}
   </button>
