@@ -13,7 +13,13 @@
       <a routerLink="/register" class="navbar-button" routerLinkActive="active-tab">register</a>
     } @else {
       <span>Hi {{ getUserName() }}!</span>
-      <a routerLink="/" class="navbar-button" routerLinkActive="active-tab">logout</a>
+      <button (click)="logout()" class="navbar-button">logout</button>
+    }
+    @if (isAdmin()) {
+      <a routerLink="/dashboard" class="navbar-button" routerLinkActive="active-tab">dashboard</a>
     }
   </div>
+  <button (click)="toggleTheme()" class="navbar-button">
+    {{ theme ? '☀️ Light' : '🌙 Dark' }}
+  </button>
 </nav>

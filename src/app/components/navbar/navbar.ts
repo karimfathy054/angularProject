@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserAuth } from '../../services/user-auth';
 import { UsersService } from '../../services/users-service';
+import { ThemeService } from '../../services/theme-service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,8 @@ export class Navbar {
   constructor(
     private authService: UserAuth,
     private usersService: UsersService,
+    private router: Router,
+    private themeService: ThemeService,
   ) {}
   isLoggedIn() {
     return this.authService.isLoggedIn();
@@ -24,5 +27,15 @@ export class Navbar {
   }
   logout() {
     this.authService.logout();
+    this.router.navigate(['']);
+  }
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
+  get theme() {
+    return this.themeService.isDarkMode();
+  }
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 }

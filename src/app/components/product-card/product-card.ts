@@ -6,7 +6,7 @@ import { Shadow } from '../../directives/shadow';
 import { ZoomImage } from '../../directives/zoom-image';
 import { ShortenPipe } from '../../pipes/shorten-pipe';
 import { Router, RouterLink } from '@angular/router';
-import { StaticData } from '../../services/static-data';
+import { DynamicDataService } from '../../services/dynamic-data-service';
 
 @Component({
   selector: 'app-product-card',
@@ -23,7 +23,7 @@ export class ProductCard {
 
   constructor(
     private router: Router,
-    private staticDataService: StaticData,
+    private dynamicDataService: DynamicDataService,
   ) {}
 
   buyProduct() {
@@ -41,8 +41,10 @@ export class ProductCard {
   }
 
   deleteProduct() {
-    this.staticDataService.deleteProduct(this.product.id);
-    this.router.navigate(['/products']);
+    this.dynamicDataService.deleteProduct(this.product.id).subscribe((res) => {
+      console.log(res);
+      this.router.navigate(['/products']);
+    });
   }
 
   toggleDescription() {

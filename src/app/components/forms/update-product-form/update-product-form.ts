@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StaticData } from '../../../services/static-data';
 import { IProduct } from '../../../models/iproduct';
 import { FormsModule } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
+import { DynamicDataService } from '../../../services/dynamic-data-service';
 
 @Component({
   selector: 'app-update-product-form',
@@ -16,15 +16,33 @@ export class UpdateProductForm {
   categories: string[] = [];
   constructor(
     private activeRoute: ActivatedRoute,
-    private staticDataService: StaticData,
+    private dynamicDataService: DynamicDataService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.product = this.staticDataService.getProductById(+this.activeRoute.snapshot.params['id']);
-    this.categories = this.staticDataService.categories;
+    this.dynamicDataService
+      .getProductById(+this.activeRoute.snapshot.params['id'])
+      .subscribe((res: any) => {
+        this.product = res[0];
+        this.cdr.detectChanges();
+      });
+    this.dynamicDataService.getCategories().subscribe((res: any) => {
+      this.categories = res;
+      this.cdr.detectChanges();
+    });
   }
 
   onSubmit(): void {
-    this.staticDataService.updateProduct(this.product);
+    this.dynamicDataService.updateProduct(this.product.id, this.product).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log(err);
+        this.cdr.detectChanges();
+      },
+    });
   }
 }

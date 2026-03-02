@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { IProduct } from '../../models/iproduct';
-import { products } from '../../db';
 import { NgClass } from '@angular/common';
+import { DynamicDataService } from '../../services/dynamic-data-service';
 
 @Component({
   selector: 'app-slider',
@@ -9,12 +9,20 @@ import { NgClass } from '@angular/common';
   templateUrl: './slider.html',
   styleUrl: './slider.css',
 })
-export class Slider {
+export class Slider implements OnInit {
   items: IProduct[] = [];
   currentIndex: number = 0;
 
-  constructor() {
-    this.items = products.slice(0, 5);
+  constructor(
+    private dynamicDataService: DynamicDataService,
+    private cdr: ChangeDetectorRef,
+  ) {}
+
+  ngOnInit() {
+    this.dynamicDataService.getProducts(5, 1).subscribe((res: any) => {
+      this.items = res['data'];
+      this.cdr.detectChanges();
+    });
   }
 
   prev() {

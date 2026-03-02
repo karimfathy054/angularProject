@@ -12,9 +12,7 @@ export class UserAuth {
     this.usersService.addUser(user);
   }
   login(email: string, password: string) {
-    console.log('lol', email, password);
     const user = this.usersService.getUserByEmail(email);
-    console.log('lol', user);
     if (user && user.password === password) {
       localStorage.setItem('token', JSON.stringify({ email: user.email }));
       return true;
@@ -25,11 +23,14 @@ export class UserAuth {
     localStorage.removeItem('token');
   }
   isLoggedIn() {
-    console.log('lol', !!localStorage.getItem('token'));
-
     return !!localStorage.getItem('token');
   }
   getToken() {
     return localStorage.getItem('token');
+  }
+  isAdmin() {
+    const token = this.getToken();
+    if (!token) return false;
+    return this.usersService.getUserByEmail(JSON.parse(token).email)?.role === 'admin';
   }
 }

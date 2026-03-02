@@ -15,8 +15,8 @@
 
 ## task2
 
-1- convert all data to dynamic + crud operations
-2- form user [admin - user]
+1- ~~convert all data to dynamic + crud operations~~
+2- reactive form user [admin - user]
 3- gurd dashboard [admin] + put , post , delete
 4- signal [dark theme]
-************
+****************

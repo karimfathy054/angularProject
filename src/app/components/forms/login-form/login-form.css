@@ -10,11 +10,11 @@
 .login-card {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 2.5rem;
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--card-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -28,7 +28,7 @@
   margin-bottom: 2rem;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--text-color);
 }
 
 .login-form {
@@ -46,7 +46,7 @@
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #4b5563;
+  color: var(--text-muted);
 }
 
 .input-wrapper {
@@ -57,9 +57,9 @@
   width: 100%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  color: #1f2937;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   outline: none;
   transition: all 0.2s ease;
@@ -67,17 +67,17 @@
 }
 
 .form-input::placeholder {
-  color: #9ca3af;
+  color: var(--input-placeholder);
 }
 
 .form-input:focus {
-  border-color: #4f46e5;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  border-color: var(--primary);
+  background-color: var(--input-focus-bg);
+  box-shadow: 0 0 0 4px var(--primary-light);
 }
 
 .error-message {
-  color: #ef4444;
+  color: var(--error-color);
   font-size: 0.75rem;
   font-weight: 500;
   margin-top: 0.25rem;
@@ -88,7 +88,7 @@
   width: 100%;
   padding: 0.875rem;
   margin-top: 1rem;
-  background-color: #4f46e5;
+  background-color: var(--primary);
   color: #ffffff;
   font-size: 1rem;
   font-weight: 600;
@@ -100,7 +100,7 @@
 }
 
 .submit-btn:not([disabled]):hover {
-  background-color: #4338ca;
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
 }
 
@@ -109,8 +109,8 @@
 }
 
 .submit-btn[disabled] {
-  background-color: #e5e7eb;
-  color: #9ca3af;
+  background-color: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
   cursor: not-allowed;
 }
 
@@ -118,17 +118,17 @@
   text-align: center;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--divider);
 }
 
 .register-text {
-  color: #6b7280;
+  color: var(--text-muted);
   font-size: 0.875rem;
   margin: 0;
 }
 
 .register-link {
-  color: #4f46e5;
+  color: var(--link-color);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -136,7 +136,7 @@
 }
 
 .register-link:hover {
-  color: #4338ca;
+  color: var(--link-hover);
   text-decoration: underline;
 }
 

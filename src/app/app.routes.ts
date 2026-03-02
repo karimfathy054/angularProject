@@ -11,6 +11,8 @@ import { UpdateProductForm } from './components/forms/update-product-form/update
 import { LoginForm } from './components/forms/login-form/login-form';
 import { RegisterForm } from './components/forms/register-form/register-form';
 import { authGuard } from './guards/auth-guard';
+import { authAdminGuard } from './guards/auth-admin-guard';
+import { AdminDashboard } from './components/admin-dashboard/admin-dashboard';
 
 export const routes: Routes = [
   {
@@ -31,6 +33,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       { path: 'delete-product', component: DeleteProduct, canActivate: [authGuard] },
+      { path: 'dashboard', component: AdminDashboard, canActivate: [authGuard, authAdminGuard] },
     ],
   },
   { path: '**', component: NotFound },

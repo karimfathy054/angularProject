@@ -1,9 +1,8 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IProduct } from '../../../models/iproduct';
-import { StaticData } from '../../../services/static-data';
-import { categories } from '../../../db';
+import { DynamicDataService } from '../../../services/dynamic-data-service';
 
 @Component({
   selector: 'app-add-product-form',
@@ -11,15 +10,24 @@ import { categories } from '../../../db';
   templateUrl: './add-product-form.html',
   styleUrl: './add-product-form.css',
 })
-export class AddProductForm {
+export class AddProductForm implements OnInit {
   newProduct: IProduct = {} as IProduct;
 
-  categories: string[] = categories;
+  categories: string[] = [];
 
-  constructor(private staticDataService: StaticData) {}
+  constructor(
+    private dynamicDataService: DynamicDataService,
+    private cdr: ChangeDetectorRef,
+  ) {}
+  ngOnInit(): void {
+    this.dynamicDataService.getCategories().subscribe((res: any) => {
+      this.categories = res;
+      this.cdr.detectChanges();
+    });
+  }
 
   onAddProduct() {
     console.log('Product added:', this.newProduct.title);
-    this.staticDataService.addProduct(this.newProduct);
+    this.dynamicDataService.addProduct(this.newProduct);
   }
 }

@@ -1,5 +1,4 @@
-.container{
-}
+
 #slider-body {
   display: flex;
   justify-content: center;
@@ -21,6 +20,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--bg-color);
 }
 
 .slide img {
@@ -46,12 +46,12 @@ button.next {
 
 button.prev {
   left: 0px;
-  background: linear-gradient(to bottom right, rgba(0,0,0,0.5), rgba(0,0,0,0));
+  background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0));
 }
 
 button.next {
   right: 0px;
-  background: linear-gradient(to bottom left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+  background: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0));
 }
 
 .dots {
@@ -65,10 +65,10 @@ button.next {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: var(--dot-color);
   cursor: pointer;
 }
 
 .dot.active {
-  background-color: #333;
+  background-color: var(--dot-active);
 }

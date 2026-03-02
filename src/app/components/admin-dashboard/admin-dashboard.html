@@ -1,0 +1,68 @@
+<div class="dashboard-container">
+  <h2>Admin Dashboard - User Management</h2>
+
+  <button class="btn-add" (click)="openAddForm()">+ Add New User</button>
+
+  <!-- Users Table -->
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button class="btn-edit" (click)="openEditForm(user)">Edit</button>
+          <button class="btn-delete" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Add/Edit Form (shown conditionally) -->
+  <div class="form-overlay" *ngIf="showForm">
+    <div class="form-modal">
+      <h3>{{ isEditing ? 'Edit User' : 'Add New User' }}</h3>
+      <form (ngSubmit)="saveUser()">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" [(ngModel)]="currentUser.firstName" name="firstName" required />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" [(ngModel)]="currentUser.lastName" name="lastName" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="currentUser.email" name="email" required />
+        </div>
+        <div class="form-group" *ngIf="!isEditing">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="currentUser.password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select [(ngModel)]="currentUser.role" name="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save">{{ isEditing ? 'Update' : 'Add' }}</button>
+          <button type="button" class="btn-cancel" (click)="cancelForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ProductCard } from '../product-card/product-card';
-import { categories } from '../../db';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
-import { StaticData } from '../../services/static-data';
 import { IProduct } from '../../models/iproduct';
+import { DynamicDataService } from '../../services/dynamic-data-service';
 
 @Component({
   selector: 'app-products-viewer',
@@ -15,30 +14,50 @@ import { IProduct } from '../../models/iproduct';
 export class ProductsViewer {
   buttonFunctionality = () => {};
   allProducts: IProduct[] = [];
-  categories: string[] = categories;
+  categories: string[] = [];
   totalValue: number = 0;
   searchQuery: string = '';
-  readonly priceRangeMin: number;
-  readonly priceRangeMax: number;
+  priceRangeMin: number = 0;
+  priceRangeMax: number = 0;
   private readonly pageSize: number = 30;
   private pageNumber: number = 0;
-  priceRange: number;
+  priceRange: number = 0;
   category: string = 'all';
   asc: boolean = true;
   @Input() renderFor: 'view' | 'edit' | 'delete' = 'view';
 
-  constructor(private staticDataService: StaticData) {
-    const { max, min } = this.staticDataService.getProductsPriceRange();
+  constructor(
+    private dynamicDataService: DynamicDataService,
+    private cdr: ChangeDetectorRef,
+  ) {
+    let max = 0;
+    let min = 0;
+    this.dynamicDataService.getProductsPriceRange().subscribe((res: any) => {
+      console.log(res);
+      max = res.max;
+      min = res.min;
+      this.setPriceRange(min, max);
+      this.cdr.detectChanges();
+    });
+  }
+  setPriceRange(min: number, max: number) {
     this.priceRangeMax = max;
     this.priceRangeMin = min;
     this.priceRange = this.priceRangeMax;
   }
 
   ngOnInit() {
-    this.allProducts = this.staticDataService.getProducts(
-      this.pageSize,
-      this.pageNumber * this.pageSize,
-    );
+    this.dynamicDataService.getProducts(this.pageSize, this.pageNumber).subscribe((res: any) => {
+      console.log(res);
+      this.allProducts = res['data'];
+      this.cdr.detectChanges();
+    });
+    this.dynamicDataService.getCategories().subscribe((res: any) => {
+      console.log(res);
+
+      this.categories = res.map((category: any) => category.name);
+      this.cdr.detectChanges();
+    });
   }
 
   updateTotalValue(value: unknown) {
@@ -46,13 +65,18 @@ export class ProductsViewer {
   }
 
   filterProducts() {
-    this.allProducts = this.staticDataService.getProductsFiltered(
-      this.pageSize,
-      this.pageNumber * this.pageSize,
-      this.searchQuery,
-      this.category,
-      this.priceRange,
-    );
+    this.dynamicDataService
+      .getProductsFiltered(
+        this.pageSize,
+        this.pageNumber,
+        this.searchQuery,
+        this.category,
+        this.priceRange,
+      )
+      .subscribe((res: any) => {
+        this.allProducts = res;
+        this.cdr.detectChanges();
+      });
   }
   sortBy(sortBy: string) {
     switch (sortBy) {

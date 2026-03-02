@@ -2,7 +2,7 @@
   <div class="register-card">
     <h2 class="register-title">Create an Account</h2>
 
-    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="register-form">
+    <form [formGroup]="userRegister" (ngSubmit)="onSubmit()" class="register-form">
       <!-- Name Fields -->
       <div class="name-group">
         <div class="form-group">
@@ -13,14 +13,11 @@
               id="firstName"
               name="firstName"
               class="form-input"
-              ngModel
-              required
-              minlength="2"
               placeholder="John"
-              #firstNameInput="ngModel"
+              formControlName="firstName"
             />
           </div>
-          @if (firstNameInput.invalid && (firstNameInput.dirty || firstNameInput.touched)) {
+          @if (firstName?.invalid && (firstName?.dirty || firstName?.touched)) {
             <div class="error-message">First name must be at least 2 characters.</div>
           }
         </div>
@@ -33,14 +30,11 @@
               id="lastName"
               name="lastName"
               class="form-input"
-              ngModel
-              required
-              minlength="2"
+              formControlName="lastName"
               placeholder="Doe"
-              #lastNameInput="ngModel"
             />
           </div>
-          @if (lastNameInput.invalid && (lastNameInput.dirty || lastNameInput.touched)) {
+          @if (lastName?.invalid && (lastName?.dirty || lastName?.touched)) {
             <div class="error-message">Last name must be at least 2 characters.</div>
           }
         </div>
@@ -55,14 +49,11 @@
             id="email"
             name="email"
             class="form-input"
-            ngModel
-            required
-            email
+            formControlName="email"
             placeholder="name@example.com"
-            #emailInput="ngModel"
           />
         </div>
-        @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+        @if (email?.invalid && (email?.dirty || email?.touched)) {
           <div class="error-message">Please enter a valid email.</div>
         }
       </div>
@@ -76,20 +67,36 @@
             id="password"
             name="password"
             class="form-input"
-            ngModel
-            required
-            minlength="6"
+            formControlName="password"
             placeholder="Create a password"
-            #passwordInput="ngModel"
           />
         </div>
-        @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
+        @if (password?.invalid && (password?.dirty || password?.touched)) {
           <div class="error-message">Password must be at least 6 characters long.</div>
+        }
+        @if (userRegister.get('confirmPassword')) {
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              class="form-input"
+              formControlName="confirmPassword"
+              placeholder="Confirm your password"
+            />
+          </div>
+          @if (confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
+            <div class="error-message">Password must be at least 6 characters long.</div>
+          }
+          @if (userRegister.hasError('unMatchedPassword') && confirmPassword?.touched) {
+            <div class="error-message">Passwords do not match.</div>
+          }
         }
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="submit-btn" [disabled]="registerForm.invalid">Register</button>
+      <button type="submit" class="submit-btn" [disabled]="userRegister.invalid">Register</button>
     </form>
 
     <!-- Login Link -->
