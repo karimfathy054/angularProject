@@ -20,10 +20,11 @@ export class ProductsViewer {
   priceRangeMin: number = 0;
   priceRangeMax: number = 0;
   private readonly pageSize: number = 30;
-  private pageNumber: number = 0;
+  private pageNumber: number = 1;
   priceRange: number = 0;
   category: string = 'all';
   asc: boolean = true;
+  sortSelect: string = 'default';
   @Input() renderFor: 'view' | 'edit' | 'delete' = 'view';
 
   constructor(
@@ -67,14 +68,14 @@ export class ProductsViewer {
   filterProducts() {
     this.dynamicDataService
       .getProductsFiltered(
-        this.pageSize,
         this.pageNumber,
+        this.pageSize,
         this.searchQuery,
         this.category,
         this.priceRange,
       )
       .subscribe((res: any) => {
-        this.allProducts = res;
+        this.allProducts = res['data'];
         this.cdr.detectChanges();
       });
   }

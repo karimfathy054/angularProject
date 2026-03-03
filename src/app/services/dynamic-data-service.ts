@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IProduct } from '../models/iproduct';
 import { IUser } from '../models/iuser';
@@ -43,12 +43,24 @@ export class DynamicDataService {
     category: string,
     priceRange: number,
   ) {
+    console.log(productTitle, category, priceRange);
+
     if (category == 'all') {
       category = '';
     }
-    return this.http.get(
-      `${this.baseUrl}/products?_page=${pageNumber}&_per_page=${limit}&title=${productTitle}&category=${category}&price:lte=${priceRange}`,
-    );
+    let queryParams = new HttpParams();
+    if (productTitle.length > 0) {
+      queryParams = queryParams.set('title', productTitle);
+    }
+    if (category.length > 0) {
+      queryParams = queryParams.set('category', category);
+    }
+    if (priceRange) {
+      queryParams = queryParams.set('price:lte', priceRange);
+    }
+    queryParams = queryParams.set('_page', pageNumber);
+    queryParams = queryParams.set('_per_page', limit);
+    return this.http.get(`${this.baseUrl}/products`, { params: queryParams });
   }
 
   getProductsPriceRange() {
